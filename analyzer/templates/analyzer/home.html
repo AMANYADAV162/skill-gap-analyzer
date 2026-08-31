@@ -1,0 +1,43 @@
+{% extends "analyzer/base.html" %}
+{% block content %}
+
+<div style="max-width: 620px; margin: 0 auto;">
+
+  <div style="text-align: center; margin-bottom: 36px;">
+    <div class="mono" style="color: var(--amber); font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 10px;">
+      Resume → Role → Roadmap
+    </div>
+    <h1 style="font-size: 34px; margin: 0 0 12px;">Find your skill gap in seconds</h1>
+    <p style="color: var(--muted); font-size: 16px; margin: 0;">
+      Upload your resume, pick the role you're chasing, and see exactly what stands between you and it.
+    </p>
+  </div>
+
+  <div class="card">
+    <form method="post" action="{% url 'analyze_resume' %}" enctype="multipart/form-data">
+      {% csrf_token %}
+
+      <div style="margin-bottom: 22px;">
+        <label>{{ form.job_role.label }}</label>
+        {{ form.job_role }}
+      </div>
+
+      <div style="margin-bottom: 26px;">
+        <label>{{ form.resume_file.label }}</label>
+        {{ form.resume_file }}
+        <div style="font-size: 13px; color: var(--muted); margin-top: 6px;">PDF only</div>
+      </div>
+
+      {% if form.errors %}
+        <div style="background: var(--amber-soft); border: 1px solid var(--amber); color: #7A4F0F; padding: 12px 16px; border-radius: 10px; font-size: 14px; margin-bottom: 20px;">
+          {{ form.errors }}
+        </div>
+      {% endif %}
+
+      <button type="submit" class="btn" style="width: 100%; padding: 15px;">Analyze my resume</button>
+    </form>
+  </div>
+
+</div>
+
+{% endblock %}

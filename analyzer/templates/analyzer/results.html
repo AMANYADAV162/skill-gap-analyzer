@@ -1,0 +1,81 @@
+{% extends "analyzer/base.html" %}
+{% block content %}
+
+<div class="mono" style="color: var(--muted); font-size: 13px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 8px;">
+  Results
+</div>
+<h1 style="font-size: 30px; margin: 0 0 28px;">{{ job_role.title }}</h1>
+
+<!-- Signature element: the journey track -->
+<div class="card" style="margin-bottom: 28px;">
+  <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 22px;">
+    <div style="font-weight: 600; font-size: 15px;">Your progress toward this role</div>
+    <div class="mono" style="font-size: 26px; font-weight: 600; color: var(--navy);">{{ match_percentage }}%</div>
+  </div>
+
+  <div style="position: relative; height: 10px; background: var(--border); border-radius: 6px; margin: 0 14px 10px;">
+    <div style="position: absolute; left: 0; top: 0; height: 100%; width: {{ match_percentage }}%; background: linear-gradient(90deg, var(--navy), var(--amber)); border-radius: 6px;"></div>
+    <div style="position: absolute; left: calc({{ match_percentage }}% - 11px); top: -8px; width: 24px; height: 24px; background: var(--surface); border: 3px solid var(--navy); border-radius: 50%;"></div>
+  </div>
+  <div style="display: flex; justify-content: space-between; margin: 0 4px;">
+    <span style="font-size: 12px; color: var(--muted);">You are here</span>
+    <span style="font-size: 12px; color: var(--muted);">{{ job_role.title }} 🚩</span>
+  </div>
+</div>
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 28px;">
+
+  <!-- Matched skills -->
+  <div class="card">
+    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 16px;">
+      <div style="width: 8px; height: 8px; border-radius: 50%; background: var(--green);"></div>
+      <div style="font-weight: 600; font-size: 15px;">Skills you already have</div>
+    </div>
+    <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+      {% for skill in matched_skills %}
+        <span style="background: var(--green-soft); color: #1F6E4A; padding: 6px 14px; border-radius: 20px; font-size: 14px; font-weight: 500;">{{ skill }}</span>
+      {% empty %}
+        <span style="color: var(--muted); font-size: 14px;">No matches yet — that's fine, everyone starts somewhere.</span>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- Missing skills -->
+  <div class="card">
+    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 16px;">
+      <div style="width: 8px; height: 8px; border-radius: 50%; background: var(--amber);"></div>
+      <div style="font-weight: 600; font-size: 15px;">Growth opportunities</div>
+    </div>
+    <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+      {% for item in missing_skill_resources %}
+        <span style="background: var(--amber-soft); color: #8A5A17; padding: 6px 14px; border-radius: 20px; font-size: 14px; font-weight: 500;">{{ item.skill }}</span>
+      {% empty %}
+        <span style="color: var(--green); font-size: 14px; font-weight: 500;">You're fully matched. Nothing missing here.</span>
+      {% endfor %}
+    </div>
+  </div>
+
+</div>
+
+<!-- Learning resources -->
+{% if missing_skill_resources %}
+<div style="margin-bottom: 12px;">
+  <div style="font-weight: 600; font-size: 17px; margin-bottom: 16px;">Close the gap</div>
+  {% for item in missing_skill_resources %}
+    <div class="card" style="margin-bottom: 14px; padding: 20px 24px;">
+      <div style="font-weight: 600; margin-bottom: 10px;">{{ item.skill }}</div>
+      {% for res in item.resources %}
+        <div style="margin-bottom: 6px;">
+          <a href="{{ res.url }}" target="_blank" style="color: var(--navy); text-decoration: none; font-size: 14px; font-weight: 500;">→ {{ res.title }}</a>
+        </div>
+      {% empty %}
+        <div style="color: var(--muted); font-size: 14px;">No resources added for this skill yet.</div>
+      {% endfor %}
+    </div>
+  {% endfor %}
+</div>
+{% endif %}
+
+<a href="{% url 'home' %}" class="btn btn-ghost">← Analyze another resume</a>
+
+{% endblock %}

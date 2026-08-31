@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Skill Gap Analyzer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F4F5F7;
+    --surface: #FFFFFF;
+    --ink: #1B2333;
+    --muted: #6B7280;
+    --navy: #1F3A5F;
+    --navy-dark: #142A47;
+    --amber: #E3A23D;
+    --amber-soft: #FCEEDA;
+    --green: #2E9E6E;
+    --green-soft: #E3F5EC;
+    --border: #E4E7EC;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    line-height: 1.5;
+  }
+  h1, h2, h3, h4, .display {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+  .mono { font-family: 'IBM Plex Mono', monospace; }
+
+  .topbar {
+    background: var(--navy-dark);
+    padding: 18px 0;
+  }
+  .topbar-inner {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .topbar-mark {
+    width: 30px; height: 30px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, var(--amber), #C97F1F);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    color: var(--navy-dark);
+    font-size: 15px;
+  }
+  .topbar-title {
+    color: #F4F5F7;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 18px;
+  }
+
+  .page {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 48px 24px 64px;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: var(--navy);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 13px 24px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 15px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.15s ease;
+  }
+  .btn:hover { background: var(--navy-dark); }
+  .btn-ghost {
+    background: transparent;
+    color: var(--navy);
+    border: 1.5px solid var(--border);
+  }
+  .btn-ghost:hover { background: var(--surface); border-color: var(--navy); }
+
+  label {
+    display: block;
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 8px;
+    color: var(--ink);
+  }
+  select, input[type="file"] {
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 1.5px solid var(--border);
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    background: var(--surface);
+    color: var(--ink);
+  }
+  select:focus, input[type="file"]:focus {
+    outline: none;
+    border-color: var(--navy);
+  }
+</style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="topbar-mark">SG</div>
+      <div class="topbar-title">Skill Gap Analyzer</div>
+    </div>
+  </div>
+  <div class="page">
+    {% block content %}{% endblock %}
+  </div>
+</body>
+</html>
