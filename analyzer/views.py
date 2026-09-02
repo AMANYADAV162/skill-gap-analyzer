@@ -5,7 +5,7 @@ from django.core.files.storage import FileSystemStorage
 
 from .forms import ResumeUploadForm
 from .models import Resource
-from .resume_parser import extract_skills_from_resume
+from .resume_parser import extract_skills_from_resume, extract_text_from_pdf, calculate_ats_score
 
 
 def home(request):
@@ -50,6 +50,10 @@ def analyze_resume(request):
     else:
         match_percentage = 0.0
 
+    # ---- ATS Score calculation ----
+    resume_text = extract_text_from_pdf(file_path)
+    ats_result = calculate_ats_score(resume_text, match_percentage)
+
     # ---- Step 6: Get free resources for each missing skill ----
     missing_skill_resources = []
     for skill_name in missing_skills:
@@ -61,5 +65,6 @@ def analyze_resume(request):
         "matched_skills": matched_skills,
         "missing_skill_resources": missing_skill_resources,
         "match_percentage": match_percentage,
+        "ats_result": ats_result,
     }
     return render(request, "analyzer/results.html", context)

@@ -39,6 +39,30 @@
       {% endfor %}
     </div>
   </div>
+  
+  <div class="card" style="margin-bottom: 28px;">
+  <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 16px;">
+    <div style="font-weight: 600; font-size: 15px;">ATS Compatibility Score</div>
+    <div class="mono" style="font-size: 22px; font-weight: 600; color: var(--navy);">{{ ats_result.ats_score }}/100</div>
+  </div>
+  <div style="display: flex; flex-wrap: wrap; gap: 10px; font-size: 13px;">
+    <span style="padding: 6px 12px; border-radius: 16px; background: {% if ats_result.has_email or ats_result.has_phone %}var(--green-soft){% else %}var(--amber-soft){% endif %};">
+      {% if ats_result.has_email or ats_result.has_phone %}✓{% else %}✗{% endif %} Contact Info
+    </span>
+    <span style="padding: 6px 12px; border-radius: 16px; background: {% if ats_result.sections_found.education %}var(--green-soft){% else %}var(--amber-soft){% endif %};">
+      {% if ats_result.sections_found.education %}✓{% else %}✗{% endif %} Education Section
+    </span>
+    <span style="padding: 6px 12px; border-radius: 16px; background: {% if ats_result.sections_found.experience_or_projects %}var(--green-soft){% else %}var(--amber-soft){% endif %};">
+      {% if ats_result.sections_found.experience_or_projects %}✓{% else %}✗{% endif %} Experience/Projects
+    </span>
+    <span style="padding: 6px 12px; border-radius: 16px; background: {% if ats_result.sections_found.skills %}var(--green-soft){% else %}var(--amber-soft){% endif %};">
+      {% if ats_result.sections_found.skills %}✓{% else %}✗{% endif %} Skills Section
+    </span>
+    <span style="padding: 6px 12px; border-radius: 16px; background: {% if ats_result.length_ok %}var(--green-soft){% else %}var(--amber-soft){% endif %};">
+      {% if ats_result.length_ok %}✓{% else %}✗{% endif %} Adequate Length
+    </span>
+  </div>
+</div>
 
   <!-- Missing skills -->
   <div class="card">
