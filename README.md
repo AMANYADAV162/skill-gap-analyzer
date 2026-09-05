@@ -83,13 +83,18 @@ Visit `http://127.0.0.1:8000/` to use the app, and `http://127.0.0.1:8000/admin/
 ## 📸 Screenshots
 
 ### Home Page
-*(add screenshot here)*
+<img width="960" height="510" alt="Screenshot 2026-09-05 131708" src="https://github.com/user-attachments/assets/c5a7f66b-7280-4a90-9f7e-9dab61cc412e" />
+
 
 ### Results Page — Skill Match
-*(add screenshot here)*
+<img width="960" height="510" alt="Screenshot 2026-09-05 132330" src="https://github.com/user-attachments/assets/195df1d3-c758-4b85-909e-ed8b4872cb94" />
+<img width="960" height="510" alt="Screenshot 2026-09-05 132456" src="https://github.com/user-attachments/assets/0d3cf2c6-8fbd-495b-8798-8dc246ad353c" />
+
+
 
 ### Results Page — ATS Score
-*(add screenshot here)*
+<img width="960" height="510" alt="Screenshot 2026-09-05 132330" src="https://github.com/user-attachments/assets/f94960b8-f90a-45ec-9877-b28566fb045f" />
+
 
 ### Admin Panel
 <img width="1920" height="1080" alt="Screenshot (5)" src="https://github.com/user-attachments/assets/86319cf3-27c2-4fc4-8a6a-a271d1f8e255" />
