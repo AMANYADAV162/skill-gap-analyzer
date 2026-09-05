@@ -92,7 +92,8 @@ Visit `http://127.0.0.1:8000/` to use the app, and `http://127.0.0.1:8000/admin/
 *(add screenshot here)*
 
 ### Admin Panel
-*(add screenshot here)*
+<img width="1920" height="1080" alt="Screenshot (5)" src="https://github.com/user-attachments/assets/86319cf3-27c2-4fc4-8a6a-a271d1f8e255" />
+
 
 ---
 
