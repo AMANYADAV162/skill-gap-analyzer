@@ -1,0 +1,35 @@
+{% extends "analyzer/base.html" %}
+{% block content %}
+<div class="card">
+  <h2>My Analyses</h2>
+  <p style="color:var(--muted); margin-top:-4px;">Your past resume analyses, most recent first.</p>
+  <table class="history-table">
+    <thead>
+      <tr>
+        <th>Job Role</th>
+        <th>Match %</th>
+        <th>Date</th>
+        <th>Resume</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for a in analyses %}
+      <tr>
+        <td style="font-weight:600;">{{ a.job_role.title }}</td>
+        <td class="mono">{{ a.match_percentage }}%</td>
+        <td class="mono">{{ a.created_at }}</td>
+        <td>
+          {% if a.resume_file %}
+            <a href="{{ a.resume_file.url }}" target="_blank" style="color:var(--navy); text-decoration:none; font-weight:500;">View file</a>
+          {% else %}
+            <span style="color:var(--muted);">—</span>
+          {% endif %}
+        </td>
+      </tr>
+      {% empty %}
+      <tr><td colspan="4" style="color:var(--muted);">No analyses yet — analyze a resume to see it here.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

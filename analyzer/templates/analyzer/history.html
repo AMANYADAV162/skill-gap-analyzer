@@ -1,0 +1,56 @@
+{% extends "analyzer/base.html" %}
+{% block content %}
+<div class="card" style="margin-bottom:24px;">
+  <h2>Activity Overview</h2>
+  <p style="color:var(--muted); margin-top:-4px;">Signup / login / logout breakdown for {{ user.username }}.</p>
+  <div style="max-width:320px; margin: 16px auto 0;">
+    <canvas id="activityChart"></canvas>
+  </div>
+</div>
+
+<div class="card">
+  <h2>Login &amp; Signup History</h2>
+  <p style="color:var(--muted); margin-top:-4px;">Recent account activity for {{ user.username }}.</p>
+  <table class="history-table">
+    <thead>
+      <tr>
+        <th>Action</th>
+        <th>Timestamp</th>
+        <th>IP Address</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for entry in history %}
+      <tr>
+        <td><span class="badge badge-{{ entry.action }}">{{ entry.action }}</span></td>
+        <td class="mono">{{ entry.timestamp }}</td>
+        <td class="mono">{{ entry.ip_address|default:"—" }}</td>
+      </tr>
+      {% empty %}
+      <tr><td colspan="3" style="color:var(--muted);">No history yet.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script>
+  const ctx = document.getElementById('activityChart');
+  new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+      labels: ['Signup', 'Login', 'Logout'],
+      datasets: [{
+        data: [{{ action_counts.signup }}, {{ action_counts.login }}, {{ action_counts.logout }}],
+        backgroundColor: ['#E3A23D', '#2E9E6E', '#8B96AA'],
+        borderWidth: 0,
+      }]
+    },
+    options: {
+      plugins: {
+        legend: { position: 'bottom', labels: { font: { family: 'Inter' } } }
+      }
+    }
+  });
+</script>
+{% endblock %}

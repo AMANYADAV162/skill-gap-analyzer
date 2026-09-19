@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Skill Gap Analyzer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F4F5F7;
+    --surface: #FFFFFF;
+    --ink: #1B2333;
+    --muted: #6B7280;
+    --navy: #1F3A5F;
+    --navy-dark: #142A47;
+    --amber: #E3A23D;
+    --amber-soft: #FCEEDA;
+    --green: #2E9E6E;
+    --green-soft: #E3F5EC;
+    --border: #E4E7EC;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    line-height: 1.5;
+  }
+  h1, h2, h3, h4, .display {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+  .mono { font-family: 'IBM Plex Mono', monospace; }
+
+  .topbar {
+    background: var(--navy-dark);
+    padding: 18px 0;
+  }
+  .topbar-inner {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .topbar-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+  }
+  .topbar-mark {
+    width: 30px; height: 30px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, var(--amber), #C97F1F);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    color: var(--navy-dark);
+    font-size: 15px;
+    flex-shrink: 0;
+  }
+  .topbar-title {
+    color: #F4F5F7;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 18px;
+  }
+
+  .topbar-nav {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+  }
+  .topbar-nav a,
+  .topbar-nav button.nav-btn {
+    color: #C9D2E0;
+    text-decoration: none;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+  }
+  .topbar-nav a:hover,
+  .topbar-nav button.nav-btn:hover {
+    color: #FFFFFF;
+  }
+  .topbar-nav .nav-signup {
+    background: var(--amber);
+    color: var(--navy-dark) !important;
+    padding: 9px 18px;
+    border-radius: 8px;
+    font-weight: 600;
+  }
+  .topbar-nav .nav-signup:hover {
+    background: #d4922f;
+    color: var(--navy-dark) !important;
+  }
+  .topbar-nav .nav-username {
+    color: #8B96AA;
+    font-size: 13px;
+  }
+
+  .page {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 48px 24px 64px;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px;
+  }
+
+  .auth-wrap {
+    max-width: 420px;
+    margin: 24px auto;
+  }
+  .auth-wrap p.subtitle {
+    color: var(--muted);
+    margin-top: -8px;
+    font-size: 14px;
+  }
+  .auth-wrap ul.errorlist {
+    list-style: none;
+    padding: 0;
+    margin: 6px 0 0;
+    color: #B3261E;
+    font-size: 13px;
+  }
+  .auth-wrap .switch-link {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+    color: var(--muted);
+  }
+  .auth-wrap .switch-link a {
+    color: var(--navy);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: var(--navy);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 13px 24px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 15px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.15s ease;
+  }
+  .btn:hover { background: var(--navy-dark); }
+  .btn-ghost {
+    background: transparent;
+    color: var(--navy);
+    border: 1.5px solid var(--border);
+  }
+  .btn-ghost:hover { background: var(--surface); border-color: var(--navy); }
+  .btn-full { width: 100%; margin-top: 8px; }
+
+  label {
+    display: block;
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 8px;
+    color: var(--ink);
+  }
+  select, input[type="file"], input[type="text"], input[type="password"], input[type="number"], input[type="email"] {
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 1.5px solid var(--border);
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    background: var(--surface);
+    color: var(--ink);
+  }
+  select:focus, input:focus {
+    outline: none;
+    border-color: var(--navy);
+  }
+
+  table.history-table { width: 100%; border-collapse: collapse; margin-top: 16px; }
+  table.history-table th {
+    text-align: left;
+    padding: 10px 8px;
+    border-bottom: 2px solid var(--border);
+    font-size: 13px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+  table.history-table td {
+    padding: 10px 8px;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+  }
+  .badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: capitalize;
+  }
+  .badge-signup { background: var(--amber-soft); color: #96631E; }
+  .badge-login { background: var(--green-soft); color: var(--green); }
+  .badge-logout { background: #EFEFF2; color: var(--muted); }
+</style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="topbar-inner">
+      <a href="{% url 'home' %}" class="topbar-brand">
+        <div class="topbar-mark">SG</div>
+        <div class="topbar-title">Skill Gap Analyzer</div>
+      </a>
+      <nav class="topbar-nav">
+        <a href="{% url 'home' %}">Home</a>
+        {% if user.is_authenticated %}
+          <a href="{% url 'history' %}">History</a>
+          <a href="{% url 'my-analyses' %}">My Analyses</a>
+          {% if user.is_staff %}<a href="/admin/">Admin</a>{% endif %}
+          <span class="nav-username">{{ user.username }}</span>
+          <form method="post" action="{% url 'logout' %}" style="display:inline; margin:0;">
+            {% csrf_token %}
+            <button type="submit" class="nav-btn">Logout</button>
+          </form>
+        {% else %}
+          <a href="{% url 'login' %}">Login</a>
+          <a href="{% url 'signup' %}" class="nav-signup">Sign Up</a>
+          <a href="/admin/">Admin</a>
+        {% endif %}
+      </nav>
+    </div>
+  </div>
+  <div class="page">
+    {% block content %}{% endblock %}
+  </div>
+</body>
+</html>

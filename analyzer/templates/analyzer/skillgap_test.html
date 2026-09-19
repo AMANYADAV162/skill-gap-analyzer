@@ -1,0 +1,18 @@
+{% extends "analyzer/base.html" %}
+{% block content %}
+<h2>Test: Skill Gap API</h2>
+<p>Ye sirf testing ke liye hai — isse tumhari already logged-in session use karke
+   /api/skill-gap/ ko seedha call kiya jata hai.</p>
+<form method="post" action="{% url 'skill-gap-api' %}" enctype="multipart/form-data">
+  {% csrf_token %}
+  <p>
+    <label>Job Role ID: </label>
+    <input type="number" name="job_role" required>
+  </p>
+  <p>
+    <label>Resume (PDF): </label>
+    <input type="file" name="resume" accept="application/pdf" required>
+  </p>
+  <button type="submit">Test Skill Gap API</button>
+</form>
+{% endblock %}

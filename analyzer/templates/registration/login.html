@@ -1,0 +1,833 @@
+{% extends "analyzer/base.html" %}
+
+{% block content %}
+
+<style>
+  /* =========================================================
+     SKILL GAP ANALYZER - LOGIN PAGE
+     Frontend only — Django authentication unchanged
+     ========================================================= */
+
+  .sga-login-page {
+    width: 100%;
+    padding: 55px 20px 70px;
+  }
+
+  .sga-login-shell {
+    width: min(1080px, 100%);
+    margin: 0 auto;
+
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(380px, 440px);
+    gap: 80px;
+
+    align-items: center;
+  }
+
+  /* =========================================================
+     LEFT SIDE
+     ========================================================= */
+
+  .sga-login-info {
+    min-width: 0;
+  }
+
+  .sga-login-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: 7px 14px;
+    margin-bottom: 20px;
+
+    border-radius: 999px;
+
+    background: var(--amber-soft);
+    color: #8A5A17;
+
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+  }
+
+  .sga-login-title {
+    margin: 0 0 18px;
+
+    color: var(--ink);
+
+    font-size: clamp(38px, 4vw, 50px);
+    line-height: 1.08;
+    letter-spacing: -1.4px;
+    font-weight: 800;
+  }
+
+  .sga-login-title span {
+    color: var(--navy);
+  }
+
+  .sga-login-description {
+    max-width: 520px;
+
+    margin: 0 0 28px;
+
+    color: var(--muted);
+
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  /* =========================================================
+     FEATURES
+     ========================================================= */
+
+  .sga-login-features {
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .sga-login-features li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    color: var(--ink);
+
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .sga-login-check {
+    width: 25px;
+    height: 25px;
+    flex: 0 0 25px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: var(--green-soft);
+  }
+
+  .sga-login-check svg {
+    width: 13px;
+    height: 13px;
+  }
+
+  /* =========================================================
+     LOGIN CARD
+     ========================================================= */
+
+  .sga-login-right {
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+  }
+
+  .sga-login-card {
+    width: 100%;
+    max-width: 440px;
+
+    padding: 32px 34px 29px;
+
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+    border-radius: 18px;
+
+    box-shadow:
+      0 12px 35px rgba(31, 58, 95, 0.10),
+      0 2px 8px rgba(31, 58, 95, 0.04);
+  }
+
+  /* =========================================================
+     CARD HEADER
+     ========================================================= */
+
+  .sga-login-card-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+
+    margin-bottom: 14px;
+
+    color: var(--navy);
+
+    font-size: 11.5px;
+    font-weight: 700;
+  }
+
+  .sga-lock {
+    width: 25px;
+    height: 25px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 7px;
+
+    background: var(--green-soft);
+  }
+
+  .sga-lock svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .sga-login-card h2 {
+    margin: 0 0 6px;
+
+    color: var(--ink);
+
+    font-size: 25px;
+    line-height: 1.25;
+    font-weight: 750;
+  }
+
+  .sga-login-subtitle {
+    margin: 0 0 24px;
+
+    color: var(--muted);
+
+    font-size: 13.5px;
+    line-height: 1.5;
+  }
+
+  /* =========================================================
+     ERROR
+     ========================================================= */
+
+  .sga-login-error {
+    display: flex;
+    align-items: flex-start;
+    gap: 9px;
+
+    margin-bottom: 17px;
+    padding: 10px 12px;
+
+    border: 1px solid #F1C4C4;
+    border-radius: 9px;
+
+    background: #FBEAEA;
+    color: #B3261E;
+
+    font-size: 12.5px;
+    line-height: 1.45;
+  }
+
+  .sga-login-error svg {
+    width: 16px;
+    height: 16px;
+
+    flex: 0 0 16px;
+
+    margin-top: 1px;
+  }
+
+  /* =========================================================
+     FORM
+     ========================================================= */
+
+  .sga-login-field {
+    margin-bottom: 17px;
+  }
+
+  .sga-login-field label {
+    display: block;
+
+    margin-bottom: 6px;
+
+    color: var(--ink);
+
+    font-size: 13px;
+    font-weight: 650;
+  }
+
+  .sga-login-input-wrap {
+    position: relative;
+  }
+
+  .sga-login-input-wrap svg {
+    position: absolute;
+
+    left: 13px;
+    top: 50%;
+
+    width: 17px;
+    height: 17px;
+
+    transform: translateY(-50%);
+
+    color: #9AA5B5;
+
+    pointer-events: none;
+  }
+
+  #id_username,
+  #id_password {
+    box-sizing: border-box;
+
+    width: 100%;
+    height: 44px;
+
+    padding: 10px 13px 10px 40px;
+
+    border: 1.5px solid var(--border);
+    border-radius: 9px;
+
+    background: var(--surface);
+    color: var(--ink);
+
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+
+    transition:
+      border-color 0.15s ease,
+      box-shadow 0.15s ease;
+  }
+
+  #id_username:hover,
+  #id_password:hover {
+    border-color: #B8C2D0;
+  }
+
+  #id_username:focus,
+  #id_password:focus {
+    outline: none;
+
+    border-color: var(--navy);
+
+    box-shadow: 0 0 0 3px rgba(31, 58, 95, 0.10);
+  }
+
+  #id_username::placeholder,
+  #id_password::placeholder {
+    color: #A7AFBC;
+  }
+
+  /* =========================================================
+     LOGIN BUTTON
+     ========================================================= */
+
+  .sga-login-submit {
+    width: 100%;
+
+    margin-top: 5px;
+    padding: 12px 18px;
+
+    border: none;
+    border-radius: 9px;
+
+    background: var(--navy);
+    color: #fff;
+
+    font-family: 'Inter', sans-serif;
+    font-size: 14.5px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+      background 0.15s ease,
+      transform 0.08s ease,
+      box-shadow 0.15s ease;
+  }
+
+  .sga-login-submit:hover {
+    background: var(--navy-dark);
+
+    box-shadow:
+      0 5px 14px rgba(31, 58, 95, 0.18);
+  }
+
+  .sga-login-submit:active {
+    transform: translateY(1px);
+  }
+
+  /* =========================================================
+     SIGNUP LINK
+     ========================================================= */
+
+  .sga-login-switch {
+    margin: 18px 0 0;
+
+    text-align: center;
+
+    color: var(--muted);
+
+    font-size: 13px;
+  }
+
+  .sga-login-switch a {
+    color: var(--navy);
+
+    font-weight: 700;
+
+    text-decoration: none;
+  }
+
+  .sga-login-switch a:hover {
+    text-decoration: underline;
+  }
+
+  /* =========================================================
+     SMALL SECURITY NOTE
+     ========================================================= */
+
+  .sga-security-note {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+
+    margin-top: 15px;
+
+    color: var(--muted);
+
+    font-size: 11px;
+  }
+
+  .sga-security-note svg {
+    width: 13px;
+    height: 13px;
+  }
+
+  /* =========================================================
+     TABLET
+     ========================================================= */
+
+  @media (max-width: 950px) {
+
+    .sga-login-shell {
+      grid-template-columns: minmax(0, 1fr) minmax(350px, 420px);
+      gap: 45px;
+    }
+
+    .sga-login-title {
+      font-size: 40px;
+    }
+
+  }
+
+  /* =========================================================
+     MOBILE
+     ========================================================= */
+
+  @media (max-width: 820px) {
+
+    .sga-login-page {
+      padding: 30px 16px 45px;
+    }
+
+    .sga-login-shell {
+      display: flex;
+      flex-direction: column;
+
+      gap: 30px;
+
+      align-items: stretch;
+    }
+
+    .sga-login-info {
+      text-align: center;
+    }
+
+    .sga-login-title {
+      font-size: 34px;
+      letter-spacing: -0.8px;
+    }
+
+    .sga-login-description {
+      margin-left: auto;
+      margin-right: auto;
+
+      font-size: 14px;
+    }
+
+    .sga-login-features {
+      width: fit-content;
+      max-width: 100%;
+
+      margin: 0 auto;
+
+      text-align: left;
+    }
+
+    .sga-login-right {
+      width: 100%;
+    }
+
+    .sga-login-card {
+      max-width: 500px;
+
+      margin: 0 auto;
+
+      padding: 28px 22px 25px;
+    }
+
+  }
+
+  /* =========================================================
+     SMALL MOBILE
+     ========================================================= */
+
+  @media (max-width: 420px) {
+
+    .sga-login-page {
+      padding-left: 13px;
+      padding-right: 13px;
+    }
+
+    .sga-login-title {
+      font-size: 30px;
+    }
+
+    .sga-login-card {
+      padding: 25px 18px 22px;
+
+      border-radius: 15px;
+    }
+
+    .sga-login-card h2 {
+      font-size: 22px;
+    }
+
+  }
+</style>
+
+
+<div class="sga-login-page">
+
+  <div class="sga-login-shell">
+
+
+    <!-- =====================================================
+         LEFT SIDE
+         ===================================================== -->
+
+    <section class="sga-login-info">
+
+      <div class="sga-login-badge">
+        <span>⚡</span>
+        AI-Powered Career Platform
+      </div>
+
+      <h1 class="sga-login-title">
+        Welcome Back.<br>
+        Keep Building With <span>AI</span>
+      </h1>
+
+      <p class="sga-login-description">
+        Continue your career journey with Skill Gap Analyzer.
+        Analyze your resume, check your ATS compatibility,
+        and discover the skills you need for your target role.
+      </p>
+
+
+      <ul class="sga-login-features">
+
+        <li>
+
+          <span class="sga-login-check">
+
+            <svg viewBox="0 0 24 24"
+                 fill="none"
+                 stroke="#1F6E4A"
+                 stroke-width="3"
+                 stroke-linecap="round"
+                 stroke-linejoin="round">
+
+              <polyline points="20 6 9 17 4 12"></polyline>
+
+            </svg>
+
+          </span>
+
+          AI Resume Analysis
+
+        </li>
+
+
+        <li>
+
+          <span class="sga-login-check">
+
+            <svg viewBox="0 0 24 24"
+                 fill="none"
+                 stroke="#1F6E4A"
+                 stroke-width="3"
+                 stroke-linecap="round"
+                 stroke-linejoin="round">
+
+              <polyline points="20 6 9 17 4 12"></polyline>
+
+            </svg>
+
+          </span>
+
+          ATS Compatibility Score
+
+        </li>
+
+
+        <li>
+
+          <span class="sga-login-check">
+
+            <svg viewBox="0 0 24 24"
+                 fill="none"
+                 stroke="#1F6E4A"
+                 stroke-width="3"
+                 stroke-linecap="round"
+                 stroke-linejoin="round">
+
+              <polyline points="20 6 9 17 4 12"></polyline>
+
+            </svg>
+
+          </span>
+
+          Skill Gap Detection
+
+        </li>
+
+      </ul>
+
+    </section>
+
+
+    <!-- =====================================================
+         RIGHT SIDE
+         ===================================================== -->
+
+    <section class="sga-login-right">
+
+      <div class="sga-login-card">
+
+
+        <!-- Security badge -->
+
+        <div class="sga-login-card-badge">
+
+          <span class="sga-lock">
+
+            <svg viewBox="0 0 24 24"
+                 fill="none"
+                 stroke="#1F6E4A"
+                 stroke-width="2"
+                 stroke-linecap="round"
+                 stroke-linejoin="round">
+
+              <rect x="4"
+                    y="10"
+                    width="16"
+                    height="11"
+                    rx="2">
+              </rect>
+
+              <path d="M8 10V7a4 4 0 0 1 8 0v3"></path>
+
+            </svg>
+
+          </span>
+
+          Secure Login
+
+        </div>
+
+
+        <h2>Log in</h2>
+
+        <p class="sga-login-subtitle">
+          Welcome back — log in to continue.
+        </p>
+
+
+        <!-- Django error -->
+
+        {% if form.errors %}
+
+          <div class="sga-login-error">
+
+            <svg viewBox="0 0 24 24"
+                 fill="none"
+                 stroke="currentColor"
+                 stroke-width="2"
+                 stroke-linecap="round"
+                 stroke-linejoin="round">
+
+              <circle cx="12"
+                      cy="12"
+                      r="9">
+              </circle>
+
+              <line x1="12"
+                    y1="8"
+                    x2="12"
+                    y2="12">
+              </line>
+
+              <line x1="12"
+                    y1="16"
+                    x2="12.01"
+                    y2="16">
+              </line>
+
+            </svg>
+
+            <span>
+              Invalid username or password.
+              Please check your credentials and try again.
+            </span>
+
+          </div>
+
+        {% endif %}
+
+
+        <!-- =================================================
+             LOGIN FORM
+             ================================================= -->
+
+        <form method="post">
+
+          {% csrf_token %}
+
+
+          <!-- Username -->
+
+          <div class="sga-login-field">
+
+            <label for="id_username">
+              Username
+            </label>
+
+            <div class="sga-login-input-wrap">
+
+              <svg viewBox="0 0 24 24"
+                   fill="none"
+                   stroke="currentColor"
+                   stroke-width="2"
+                   stroke-linecap="round"
+                   stroke-linejoin="round">
+
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+
+                <circle cx="12"
+                        cy="7"
+                        r="4">
+                </circle>
+
+              </svg>
+
+              {{ form.username }}
+
+            </div>
+
+          </div>
+
+
+          <!-- Password -->
+
+          <div class="sga-login-field">
+
+            <label for="id_password">
+              Password
+            </label>
+
+            <div class="sga-login-input-wrap">
+
+              <svg viewBox="0 0 24 24"
+                   fill="none"
+                   stroke="currentColor"
+                   stroke-width="2"
+                   stroke-linecap="round"
+                   stroke-linejoin="round">
+
+                <rect x="3"
+                      y="11"
+                      width="18"
+                      height="11"
+                      rx="2">
+                </rect>
+
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+
+              </svg>
+
+              {{ form.password }}
+
+            </div>
+
+          </div>
+
+
+          <!-- Hidden redirect -->
+
+          <input type="hidden"
+                 name="next"
+                 value="{{ next }}">
+
+
+          <!-- Submit -->
+
+          <button type="submit"
+                  class="sga-login-submit">
+
+            Log In
+
+          </button>
+
+        </form>
+
+
+        <!-- Signup -->
+
+        <p class="sga-login-switch">
+
+          New here?
+
+          <a href="{% url 'signup' %}">
+            Create an account
+          </a>
+
+        </p>
+
+
+        <!-- Security -->
+
+        <div class="sga-security-note">
+
+          <svg viewBox="0 0 24 24"
+               fill="none"
+               stroke="currentColor"
+               stroke-width="2"
+               stroke-linecap="round"
+               stroke-linejoin="round">
+
+            <path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7l8-4z">
+            </path>
+
+          </svg>
+
+          Your account is protected by Django authentication.
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </div>
+
+</div>
+
+{% endblock %}
