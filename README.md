@@ -124,30 +124,28 @@ Visit `http://127.0.0.1:8000/` to use the app, and `http://127.0.0.1:8000/admin/
 ## 📸 Screenshots
 
 ### Signup Page
-[PASTE LINK HERE]
+<img width="960" height="510" alt="Screenshot 2026-09-20 133203" src="https://github.com/user-attachments/assets/73a12a4a-9376-4406-94f8-d1132fc7998a" />
 
 ### Login Page
-[PASTE LINK HERE]
+<img width="960" height="510" alt="Screenshot 2026-09-20 132550" src="https://github.com/user-attachments/assets/d47851e9-b0d8-424a-9b0b-a308e1e6c741" />
+
 
 ### Home Page
-<img width="960" height="510" alt="Screenshot 2026-09-05 131708" src="https://github.com/user-attachments/assets/c5a7f66b-7280-4a90-9f7e-9dab61cc412e" />
+<img width="960" height="510" alt="Screenshot 2026-09-20 133409" src="https://github.com/user-attachments/assets/6deaa0b6-8fdc-426e-b011-ea63fafd91d3" />
 
-### Results Page — Skill Match
-<img width="960" height="510" alt="Screenshot 2026-09-05 132330" src="https://github.com/user-attachments/assets/195df1d3-c758-4b85-909e-ed8b4872cb94" />
-<img width="960" height="510" alt="Screenshot 2026-09-05 132456" src="https://github.com/user-attachments/assets/0d3cf2c6-8fbd-495b-8798-8dc246ad353c" />
 
-### Results Page — ATS Score & Charts
-<img width="960" height="510" alt="Screenshot 2026-09-05 132330" src="https://github.com/user-attachments/assets/f94960b8-f90a-45ec-9877-b28566fb045f" />
-[PASTE LINK HERE]
+### Results Page — Skill Match & ATS Score Charts
+<img width="960" height="510" alt="Screenshot 2026-09-20 133513" src="https://github.com/user-attachments/assets/d001bced-033d-4401-934b-aa7db0b84f74" />
+<img width="960" height="510" alt="Screenshot 2026-09-20 133556" src="https://github.com/user-attachments/assets/9dad977d-4b4c-4d60-be9e-800cdb5e3ef8" />
+
 
 ### History Page (Activity Log + Chart)
-[PASTE LINK HERE]
+<img width="960" height="510" alt="Screenshot 2026-09-20 134407" src="https://github.com/user-attachments/assets/d7253b2d-bc4a-442c-8ddd-4b885e9f85cb" />
+<img width="960" height="510" alt="Screenshot 2026-09-20 134429" src="https://github.com/user-attachments/assets/852878ce-9184-4053-ac43-c6bfd17cc6c4" />
+
 
 ### My Analyses Page
-[PASTE LINK HERE]
-
-### Skill-Gap API (Django REST Framework)
-[PASTE LINK HERE]
+<img width="960" height="510" alt="Screenshot 2026-09-20 134348" src="https://github.com/user-attachments/assets/14edf9c7-e687-4bce-9c91-48b092dae552" />
 
 ### Admin Panel
 <img width="1920" height="1080" alt="Screenshot (5)" src="https://github.com/user-attachments/assets/86319cf3-27c2-4fc4-8a6a-a271d1f8e255" />
